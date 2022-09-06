@@ -14,7 +14,11 @@ load_dotenv(dotenv_path=env_path)
 
 logging.basicConfig(level=logging.INFO)
 
-client = commands.Bot(command_prefix="!")
+intents = discord.Intents.default()
+intents.message_content = True
+
+client = commands.Bot(command_prefix="!", intents = intents)
+print("Booting up...")
 
 
 # @client.command()
@@ -34,6 +38,11 @@ client = commands.Bot(command_prefix="!")
 #     embed.add_field(name="!part", value="plays the next 5 seconds of song during the game",inline = True)
     
 #     await ctx.send(embed = embed)
+
+@client.event
+async def on_ready():  # when the bot is ready
+    await client.change_presence(activity=discord.Game('Suffering'))
+    print(f'{client.user} has connected to Discord!')
 
 @client.command(
     brief = "Play song",
